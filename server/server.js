@@ -76,7 +76,7 @@ server.put("/cars", (req, res) => {
   let updateString = "";
   const columnsArray = Object.keys(car);
   columnsArray.forEach((column, i) => {
-    updateString += `${column}="${user[column]}"`;
+    updateString += `${column}="${car[column]}"`;
     if (i != columnsArray.length - 1) updateString += ",";
   });
   const sql = `UPDATE cars SET ${updateString} WHERE id=${id}`;
@@ -93,7 +93,7 @@ server.put("/cars", (req, res) => {
 
 server.delete("/cars/:id", (req, res) => {
   const id = req.params.id;
-  const sql = `DELETE FROM cars WHERE id = ${id}`;
+  const sql = `DELETE FROM cars WHERE id=${id}`;
 
   db.run(sql, (err) => {
     if (err) {

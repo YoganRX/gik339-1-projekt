@@ -1,4 +1,7 @@
 const url = "http://localhost:3000/cars";
+const deleteModal = document.getElementById("deleteModal");
+const confirmDelete = document.getElementById("confirmDelete");
+const cancelDelete = document.getElementById("cancelDelete");
 
 window.addEventListener("load", fetchData);
 
@@ -6,25 +9,25 @@ function fetchData() {
   fetch(url)
     .then((result) => result.json())
     .then((cars) => {
-      let html = `<ul class="w-3/4 my-3 mx-auto flex flex-wrap gap-2 justify-center">`;
+      let html = `<ul class="grid sm:grid-cols-1 sm:gap-10 md:grid-cols-2 md:gap-2 xl:grid-cols-3 xl:gap-2">`;
       cars.forEach((car) => {
         html += `
         <li
           class="bg-white basis-1/3 text-black p-2 rounded-md border-2 border-black-100 flex flex-row gap-4">
-          <div class="bg-${car.color}-950 w-1/3"></div>
+          <div class="bg-${car.color}-950 w-1/3 border border-black"></div>
           <div class="flex-1 flex flex-col">
             <h3 class="text-lg font-medium">${car.brand} ${car.model}</h3>
             <p>Regnr: ${car.regnr}</p>
             <p>Årsmodell: ${car.year}</p>
             <p>Pris: ${car.price}kr</p>
             <div>
-              <button class="border border-green-800 hover:bg-green-900/100 rounded-md bg-green-900/50 p-1 text-sm mt-2">
+              <button class="border border-green-600 hover:bg-green-600/100 rounded-md bg-green-600/75 p-1 text-sm mt-2">
                 Köp
               </button>
-              <button class="border border-blue-800 hover:bg-blue-900/100 rounded-md bg-blue-900/50 p-1 text-sm mt-2">
+              <button onclick="setCurrentCar(${car.id})" class="border border-blue-600 hover:bg-blue-600/100 rounded-md bg-blue-600/75 p-1 text-sm mt-2">
                 Ändra
               </button>
-              <button class="border border-red-800 hover:bg-red-900/100 rounded-md bg-red-800/50 p-1 text-sm mt-2">
+              <button onclick="deleteCar(${car.id}, '${car.brand}', '${car.model}')" class="border border-red-600 hover:bg-red-600/100 rounded-md bg-red-600/75 p-1 text-sm mt-2" data-dialog-taret="removeModal">
                 Ta bort
               </button>
             </div>
@@ -39,8 +42,60 @@ function fetchData() {
     });
 }
 
+function setCurrentCar(id) {
+  console.log("current", id);
+  fetch(`${url}/${id}`)
+    .then((result) => result.json())
+    .then((car) => {
+      console.log(car);
+      userForm.brand.value = car.brand;
+      userForm.model.value = car.model;
+      userForm.regnr.value = car.regnr;
+      userForm.color.value = car.color;
+      userForm.year.value = car.year;
+      userForm.price.value = car.price;
+      userForm.forSale.value = car.forSale;
+
+      localStorage.setItem("currentId", car.id);
+    });
+}
+
+function deleteCar(id, brand, model) {
+  console.log("delete", id, brand, model);
+  localStorage.setItem("carIdDelete", id);
+
+  const modalCar = document.getElementById("modalCar");
+  modalCar.textContent = brand + " " + model;
+
+  deleteModal.classList.remove("hidden");
+  //fetch(`${url}/${id}`, { method: "DELETE" }).then((result) => fetchData());
+}
+
+confirmDelete.addEventListener("click", () => {
+  const id = localStorage.getItem("carIdDelete");
+
+  if (id) {
+    fetch(`${url}/${id}`, { method: "DELETE" }).then((result) => {
+      fetchData();
+      closeModal();
+    });
+  }
+});
+
+cancelDelete.addEventListener("click", closeModal);
+
+function closeModal() {
+  deleteModal.classList.add("hidden");
+  localStorage.removeItem("carIdDelete");
+}
+
 console.log(userForm);
 userForm.addEventListener("submit", handleSubmit);
+
+userForm.addEventListener("reset", () => {
+  localStorage.removeItem("currentId");
+  userForm.reset();
+});
 
 function handleSubmit(e) {
   e.preventDefault();
@@ -63,10 +118,11 @@ function handleSubmit(e) {
   serverUserObject.price = userForm.price.value;
   serverUserObject.forSale = userForm.forSale.value;
 
-  console.log(serverUserObject);
+  const id = localStorage.getItem("currentId");
+  if (id) serverUserObject.id = id;
 
   const request = new Request(url, {
-    method: "POST",
+    method: serverUserObject.id ? "PUT" : "POST",
     headers: {
       "content-type": "application/json",
     },
@@ -74,8 +130,8 @@ function handleSubmit(e) {
   });
 
   fetch(request).then((response) => {
-    console.log(response);
     fetchData();
+    localStorage.removeItem("currentId");
     userForm.reset();
   });
 }

@@ -15,7 +15,7 @@
       <h1 class="text-3xl">Bilregistrering</h1>
     </header>
     <main class="mt-10">
-      <div class="w-[55rem] mx-auto mt-8 bg-white/25 p-3 rounded-lg">
+      <div class="w-[45rem] mx-auto mt-8 bg-white/25 p-3 rounded-lg">
         <form id="userForm">
           <div class="form-control my-4 mx-auto flex w-3/4 items-center">
             <label for="brand" class="mr-4 text-xl w-40">Märke</label>
@@ -101,8 +101,36 @@
           </div>
         </form>
       </div>
-      <div id="listContainer"></div>
+      <div id="listContainer" class="w-[45rem] mx-auto mt-8"></div>
     </main>
+
+    <div
+      id="deleteModal"
+      class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm"
+    >
+      <div
+        class="bg-slate-800 p-6 rounded-lg shadow-xl border border-slate-600 w-96 text-center"
+      >
+        <h2 class="text-xl font-bold mb-4">
+          Är du säker att du vill ta bort
+          <span id="modalCar" class="text-red-600"></span>?
+        </h2>
+        <div class="flex justify-center gap-4">
+          <button
+            id="cancelDelete"
+            class="px-4 py-2 bg-slate-500 hover:bg-slate-600 rounded-md transition-colors"
+          >
+            Avbryt
+          </button>
+          <button
+            id="confirmDelete"
+            class="px-4 py-2 bg-red-600 hover:bg-red-700 rounded-md transition-colors"
+          >
+            Ta bort
+          </button>
+        </div>
+      </div>
+    </div>
 
     <script src="script.js"></script>
   </body>
