@@ -1,4 +1,11 @@
 const url = "http://localhost:3000/cars";
+
+const createModal = document.getElementById("createModal");
+const confirmCreate = document.getElementById("confirmCreate");
+
+const updateModal = document.getElementById("updateModal");
+const confirmUpdate = document.getElementById("confirmUpdate");
+
 const deleteModal = document.getElementById("deleteModal");
 const confirmDelete = document.getElementById("confirmDelete");
 const cancelDelete = document.getElementById("cancelDelete");
@@ -27,7 +34,7 @@ function fetchData() {
               <button onclick="setCurrentCar(${car.id})" class="border border-blue-600 hover:bg-blue-600/100 rounded-md bg-blue-600/75 p-1 text-sm mt-2">
                 Ändra
               </button>
-              <button onclick="deleteCar(${car.id}, '${car.brand}', '${car.model}')" class="border border-red-600 hover:bg-red-600/100 rounded-md bg-red-600/75 p-1 text-sm mt-2" data-dialog-taret="removeModal">
+              <button onclick="deleteCar(${car.id}, '${car.brand}', '${car.model}')" class="border border-red-600 hover:bg-red-600/100 rounded-md bg-red-600/75 p-1 text-sm mt-2" data-dialog-target="removeModal">
                 Ta bort
               </button>
             </div>
@@ -64,8 +71,8 @@ function deleteCar(id, brand, model) {
   console.log("delete", id, brand, model);
   localStorage.setItem("carIdDelete", id);
 
-  const modalCar = document.getElementById("modalCar");
-  modalCar.textContent = brand + " " + model;
+  const modalCarDeleteTxt = document.getElementById("modalCarDeleteTxt");
+  modalCarDeleteTxt.textContent = brand + " " + model;
 
   deleteModal.classList.remove("hidden");
   //fetch(`${url}/${id}`, { method: "DELETE" }).then((result) => fetchData());
@@ -77,14 +84,14 @@ confirmDelete.addEventListener("click", () => {
   if (id) {
     fetch(`${url}/${id}`, { method: "DELETE" }).then((result) => {
       fetchData();
-      closeModal();
+      closeDeleteModal();
     });
   }
 });
 
-cancelDelete.addEventListener("click", closeModal);
+cancelDelete.addEventListener("click", closeDeleteModal);
 
-function closeModal() {
+function closeDeleteModal() {
   deleteModal.classList.add("hidden");
   localStorage.removeItem("carIdDelete");
 }
@@ -94,11 +101,22 @@ userForm.addEventListener("submit", handleSubmit);
 
 userForm.addEventListener("reset", () => {
   localStorage.removeItem("currentId");
-  userForm.reset();
+  //userForm.reset();
+});
+
+confirmCreate.addEventListener("click", () => {
+  console.log("Create Modal göms");
+  createModal.classList.add("hidden");
+});
+
+confirmUpdate.addEventListener("click", () => {
+  console.log("Update Modal göms");
+  updateModal.classList.add("hidden");
 });
 
 function handleSubmit(e) {
   e.preventDefault();
+
   const serverUserObject = {
     brand: "",
     model: "",
@@ -130,6 +148,17 @@ function handleSubmit(e) {
   });
 
   fetch(request).then((response) => {
+    const carName = `${serverUserObject.brand} ${serverUserObject.model}`;
+    if (id) {
+      const modalCarUpdateTxt = document.getElementById("modalCarUpdateTxt");
+      modalCarUpdateTxt.textContent = carName;
+      updateModal.classList.remove("hidden");
+    } else {
+      const modalCarCreateTxt = document.getElementById("modalCarCreateTxt");
+      modalCarCreateTxt.textContent = carName;
+      createModal.classList.remove("hidden");
+    }
+
     fetchData();
     localStorage.removeItem("currentId");
     userForm.reset();
