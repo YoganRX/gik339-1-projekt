@@ -105,44 +105,17 @@
     </main>
 
     <div
-      id="createModal"
+      id="messageModal"
       class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm"
     >
       <div
         class="bg-slate-800 p-6 rounded-lg shadow-xl border border-slate-600 w-96 text-center"
       >
-        <h2 class="text-xl font-bold mb-4">
-          <span id="modalCarCreateTxt" class="text-red-600"></span> är nu
-          skapad!
-        </h2>
-        <div class="flex justify-center gap-4">
+        <h2 id="messageText" class="text-xl font-bold mb-4 text-green-400"></h2>
+        <div class="flex justify-center">
           <button
-            id="confirmCreate"
-            type="button"
-            class="px-4 py-2 bg-red-600 hover:bg-red-700 rounded-md transition-colors"
-          >
-            Stäng
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <div
-      id="updateModal"
-      class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm"
-    >
-      <div
-        class="bg-slate-800 p-6 rounded-lg shadow-xl border border-slate-600 w-96 text-center"
-      >
-        <h2 class="text-xl font-bold mb-4">
-          <span id="modalCarUpdateTxt" class="text-red-600"></span> är nu
-          updaterad!
-        </h2>
-        <div class="flex justify-center gap-4">
-          <button
-            id="confirmUpdate"
-            type="button"
-            class="px-4 py-2 bg-red-600 hover:bg-red-700 rounded-md transition-colors"
+            id="closeMessageBtn"
+            class="px-4 py-2 bg-slate-500 hover:bg-slate-600 rounded-md transition-colors"
           >
             Stäng
           </button>
@@ -159,19 +132,17 @@
       >
         <h2 class="text-xl font-bold mb-4">
           Är du säker att du vill ta bort
-          <span id="modalCarDeleteTxt" class="text-red-600"></span>?
+          <span id="modalCar" class="text-red-600"></span>?
         </h2>
         <div class="flex justify-center gap-4">
           <button
             id="cancelDelete"
-            type="button"
             class="px-4 py-2 bg-slate-500 hover:bg-slate-600 rounded-md transition-colors"
           >
             Avbryt
           </button>
           <button
             id="confirmDelete"
-            type="button"
             class="px-4 py-2 bg-red-600 hover:bg-red-700 rounded-md transition-colors"
           >
             Ta bort

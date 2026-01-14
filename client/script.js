@@ -1,10 +1,8 @@
 const url = "http://localhost:3000/cars";
 
-const createModal = document.getElementById("createModal");
-const confirmCreate = document.getElementById("confirmCreate");
-
-const updateModal = document.getElementById("updateModal");
-const confirmUpdate = document.getElementById("confirmUpdate");
+const messageModal = document.getElementById("messageModal");
+const messageText = document.getElementById("messageText");
+const closeMessageBtn = document.getElementById("closeMessageBtn");
 
 const deleteModal = document.getElementById("deleteModal");
 const confirmDelete = document.getElementById("confirmDelete");
@@ -34,7 +32,7 @@ function fetchData() {
               <button onclick="setCurrentCar(${car.id})" class="border border-blue-600 hover:bg-blue-600/100 rounded-md bg-blue-600/75 p-1 text-sm mt-2">
                 Ändra
               </button>
-              <button onclick="deleteCar(${car.id}, '${car.brand}', '${car.model}')" class="border border-red-600 hover:bg-red-600/100 rounded-md bg-red-600/75 p-1 text-sm mt-2" data-dialog-target="removeModal">
+              <button onclick="deleteCar(${car.id}, '${car.brand}', '${car.model}')" class="border border-red-600 hover:bg-red-600/100 rounded-md bg-red-600/75 p-1 text-sm mt-2" data-dialog-taret="removeModal">
                 Ta bort
               </button>
             </div>
@@ -71,8 +69,8 @@ function deleteCar(id, brand, model) {
   console.log("delete", id, brand, model);
   localStorage.setItem("carIdDelete", id);
 
-  const modalCarDeleteTxt = document.getElementById("modalCarDeleteTxt");
-  modalCarDeleteTxt.textContent = brand + " " + model;
+  const modalCar = document.getElementById("modalCar");
+  modalCar.textContent = brand + " " + model;
 
   deleteModal.classList.remove("hidden");
   //fetch(`${url}/${id}`, { method: "DELETE" }).then((result) => fetchData());
@@ -84,14 +82,14 @@ confirmDelete.addEventListener("click", () => {
   if (id) {
     fetch(`${url}/${id}`, { method: "DELETE" }).then((result) => {
       fetchData();
-      closeDeleteModal();
+      closeModal();
     });
   }
 });
 
-cancelDelete.addEventListener("click", closeDeleteModal);
+cancelDelete.addEventListener("click", closeModal);
 
-function closeDeleteModal() {
+function closeModal() {
   deleteModal.classList.add("hidden");
   localStorage.removeItem("carIdDelete");
 }
@@ -101,22 +99,15 @@ userForm.addEventListener("submit", handleSubmit);
 
 userForm.addEventListener("reset", () => {
   localStorage.removeItem("currentId");
-  //userForm.reset();
+  userForm.reset();
 });
 
-confirmCreate.addEventListener("click", () => {
-  console.log("Create Modal göms");
-  createModal.classList.add("hidden");
-});
-
-confirmUpdate.addEventListener("click", () => {
-  console.log("Update Modal göms");
-  updateModal.classList.add("hidden");
+closeMessageBtn.addEventListener("click", () => {
+  messageModal.classList.add("hidden");
 });
 
 function handleSubmit(e) {
   e.preventDefault();
-
   const serverUserObject = {
     brand: "",
     model: "",
@@ -137,10 +128,12 @@ function handleSubmit(e) {
   serverUserObject.forSale = userForm.forSale.value;
 
   const id = localStorage.getItem("currentId");
-  if (id) serverUserObject.id = id;
+  if (id) {
+    serverUserObject.id = id;
+  }
 
   const request = new Request(url, {
-    method: serverUserObject.id ? "PUT" : "POST",
+    method: id ? "PUT" : "POST",
     headers: {
       "content-type": "application/json",
     },
@@ -148,18 +141,16 @@ function handleSubmit(e) {
   });
 
   fetch(request).then((response) => {
-    const carName = `${serverUserObject.brand} ${serverUserObject.model}`;
-    if (id) {
-      const modalCarUpdateTxt = document.getElementById("modalCarUpdateTxt");
-      modalCarUpdateTxt.textContent = carName;
-      updateModal.classList.remove("hidden");
-    } else {
-      const modalCarCreateTxt = document.getElementById("modalCarCreateTxt");
-      modalCarCreateTxt.textContent = carName;
-      createModal.classList.remove("hidden");
-    }
-
     fetchData();
+
+    const actionType = id ? "uppdaterades" : "skapades";
+
+    const brand = serverUserObject.brand;
+    const model = serverUserObject.model;
+
+    messageText.textContent = `${brand} ${model} ${actionType} korrekt!`;
+    messageModal.classList.remove("hidden");
+
     localStorage.removeItem("currentId");
     userForm.reset();
   });

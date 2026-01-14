@@ -1,8 +1,6 @@
 const sqlite = require("sqlite3").verbose();
 const db = new sqlite.Database("./gik339.db");
 
-// db.all("SELECT * FROM cars", (err, rows) => console.log(rows));
-
 const express = require("express");
 const server = express();
 
