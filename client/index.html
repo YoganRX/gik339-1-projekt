@@ -38,12 +38,16 @@
     class="min-h-[100vh] bg-gradient-to-b from-slate-800 to-slate-700 text-white"
   >
     <header class="mt-10 text-center">
-      <h1 class="text-3xl">Bilregistrering</h1>
+      <h1 class="text-3xl">Bilannonser</h1>
     </header>
-    <main class="mt-10">
-      <div class="w-[45rem] mx-auto mt-8 bg-white/25 p-3 rounded-lg">
+    <main
+      class="mt-10 container mx-auto px-4 grid grid-cols-1 md:grid-cols-6 gap-4 items-start"
+    >
+      <div
+        class="col-span-full bg-white/25 p-3 rounded-lg md:col-span-4 md:col-start-2"
+      >
         <form id="userForm">
-          <div class="form-control my-4 mx-auto flex w-3/4 items-center">
+          <div class="form-control my-4 flex flex-col sm:flex-row items-center">
             <label for="brand" class="mr-4 text-xl w-40">Märke</label>
             <input
               class="text-slate-800 p-1 flex-1 rounded-md"
@@ -51,7 +55,7 @@
               name="brand"
             />
           </div>
-          <div class="form-control my-4 mx-auto flex w-3/4 items-center">
+          <div class="form-control my-4 flex flex-col sm:flex-row items-center">
             <label for="model" class="mr-4 text-xl w-40">Model</label>
             <input
               class="text-slate-800 p-1 flex-1 rounded-md"
@@ -59,7 +63,7 @@
               name="model"
             />
           </div>
-          <div class="form-control my-4 mx-auto flex w-3/4 items-center">
+          <div class="form-control my-4 flex flex-col sm:flex-row items-center">
             <label for="regnr" class="mr-4 text-xl w-40">Regnr</label>
             <input
               class="text-slate-800 p-1 flex-1 rounded-md"
@@ -67,7 +71,7 @@
               name="regnr"
             />
           </div>
-          <div class="form-control my-4 mx-auto flex w-3/4 items-center">
+          <div class="form-control my-4 flex flex-col sm:flex-row items-center">
             <label for="color" class="mr-4 text-xl w-40">Färg</label>
             <select
               class="bg-white text-slate-800 p-1 flex-1 rounded-md"
@@ -83,7 +87,7 @@
               <option value="white">Vit</option>
             </select>
           </div>
-          <div class="form-control my-4 mx-auto flex w-3/4 items-center">
+          <div class="form-control my-4 flex flex-col sm:flex-row items-center">
             <label for="year" class="mr-4 text-xl w-40">Årsmodell</label>
             <input
               class="text-slate-800 p-1 flex-1 rounded-md"
@@ -91,7 +95,7 @@
               name="year"
             />
           </div>
-          <div class="form-control my-4 mx-auto flex w-3/4 items-center">
+          <div class="form-control my-4 flex flex-col sm:flex-row items-center">
             <label for="price" class="mr-4 text-xl w-40">Pris</label>
             <input
               class="text-slate-800 p-1 flex-1 rounded-md"
@@ -99,9 +103,7 @@
               name="price"
             />
           </div>
-          <div
-            class="form-control my-4 mx-auto flex w-3/4 items-center justify-end gap-4"
-          >
+          <div class="form-control my-4 flex justify-end gap-4">
             <button
               class="px-4 py-1 bg-slate-200 text-slate-800 rounded-md hover:bg-slate-300"
               type="reset"
@@ -119,8 +121,14 @@
           </div>
         </form>
       </div>
-      <div id="listContainer" class="w-[45rem] mx-auto mt-8"></div>
+      <div
+        id="listContainer"
+        class="col-span-full md:col-span-4 md:col-start-2"
+      ></div>
     </main>
+    <footer class="mt-10 mb-10 text-center">
+      <p>Gjord av Projektgrupp 1</p>
+    </footer>
 
     <div
       id="messageModal"

@@ -14,18 +14,20 @@ function fetchData() {
   fetch(url)
     .then((result) => result.json())
     .then((cars) => {
-      let html = `<ul class="grid sm:grid-cols-1 sm:gap-10 md:grid-cols-2 md:gap-2 xl:grid-cols-3 xl:gap-2">`;
+      let html = `<ul class="grid sm:grid-cols-1 lg:grid-cols-2 gap-4">`;
       cars.forEach((car) => {
         html += `
         <li
-          class="bg-white basis-1/3 text-black p-2 rounded-md border-black-900 flex flex-row gap-4">
-          <div class="car-color-${car.color} w-1/3 border border-2 border-black"></div>
-          <div class="flex-1 flex flex-col">
+          class="bg-white text-black p-2 rounded-md border-black-900 grid grid-cols-3 gap-4">
+          <div class="col-span-3 border-b border-slate-300 pb-2 mb-1">
             <h3 class="text-lg font-medium">${car.brand} ${car.model}</h3>
+          </div>
+          <div class="car-color-${car.color} rounded-md border border-2 border-black min-h[100px]"></div>
+          <div class="col-span-2 flex flex-col justify-between">
             <p>Regnr: ${car.regnr}</p>
             <p>Årsmodell: ${car.year}</p>
             <p>Pris: ${car.price}kr</p>
-            <div>
+            <div class="flex flex-row gap-2 mt-2 justify-end">
               <button onclick="setCurrentCar(${car.id})" class="border border-blue-600 hover:bg-blue-600/100 rounded-md bg-blue-600/75 p-1 text-sm mt-2">
                 Ändra
               </button>
