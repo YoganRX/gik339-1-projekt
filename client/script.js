@@ -18,7 +18,7 @@ function fetchData() {
       cars.forEach((car) => {
         html += `
         <li
-          class="bg-white basis-1/3 text-black p-2 rounded-md border-2 border-black-100 flex flex-row gap-4">
+          class="bg-white basis-1/3 text-black p-2 rounded-md border-black-900 flex flex-row gap-4">
           <div class="bg-${car.color}-950 w-1/3 border border-black"></div>
           <div class="flex-1 flex flex-col">
             <h3 class="text-lg font-medium">${car.brand} ${car.model}</h3>
@@ -26,9 +26,6 @@ function fetchData() {
             <p>Årsmodell: ${car.year}</p>
             <p>Pris: ${car.price}kr</p>
             <div>
-              <button class="border border-green-600 hover:bg-green-600/100 rounded-md bg-green-600/75 p-1 text-sm mt-2">
-                Köp
-              </button>
               <button onclick="setCurrentCar(${car.id})" class="border border-blue-600 hover:bg-blue-600/100 rounded-md bg-blue-600/75 p-1 text-sm mt-2">
                 Ändra
               </button>
@@ -59,7 +56,6 @@ function setCurrentCar(id) {
       userForm.color.value = car.color;
       userForm.year.value = car.year;
       userForm.price.value = car.price;
-      userForm.forSale.value = car.forSale;
 
       localStorage.setItem("currentId", car.id);
     });
@@ -115,7 +111,6 @@ function handleSubmit(e) {
     color: "",
     year: "",
     price: "",
-    forSale: "",
   };
 
   // Om tid finns, hämta datan via loop
@@ -125,7 +120,6 @@ function handleSubmit(e) {
   serverUserObject.color = userForm.color.value;
   serverUserObject.year = userForm.year.value;
   serverUserObject.price = userForm.price.value;
-  serverUserObject.forSale = userForm.forSale.value;
 
   const id = localStorage.getItem("currentId");
   if (id) {

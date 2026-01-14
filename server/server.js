@@ -46,7 +46,7 @@ server.get("/cars/:id", (req, res) => {
 
 server.post("/cars", (req, res) => {
   const car = req.body;
-  const sql = `INSERT INTO cars(brand, model, regnr, color, year, price, forSale) VALUES (?, ?, ?, ?, ?, ?, ?)`;
+  const sql = `INSERT INTO cars(brand, model, regnr, color, year, price) VALUES (?, ?, ?, ?, ?, ?)`;
 
   db.run(sql, Object.values(car), (err) => {
     if (err) {
@@ -68,7 +68,6 @@ server.put("/cars", (req, res) => {
     color: bodyData.color,
     year: bodyData.year,
     price: bodyData.price,
-    forSale: bodyData.forSale,
   };
 
   let updateString = "";
