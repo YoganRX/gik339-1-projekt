@@ -45,7 +45,7 @@ function fetchData() {
 }
 
 function setCurrentCar(id) {
-  console.log("current", id);
+  console.log("currentId:", id);
   fetch(`${url}/${id}`)
     .then((result) => result.json())
     .then((car) => {
@@ -62,7 +62,7 @@ function setCurrentCar(id) {
 }
 
 function deleteCar(id, brand, model) {
-  console.log("delete", id, brand, model);
+  console.log("delete id:", id, brand, model);
   localStorage.setItem("carIdDelete", id);
 
   const modalCar = document.getElementById("modalCar");
@@ -81,6 +81,7 @@ confirmDelete.addEventListener("click", () => {
       closeModal();
     });
   }
+  console.log("ID:", id, "has been deleted");
 });
 
 cancelDelete.addEventListener("click", closeModal);
@@ -144,6 +145,12 @@ function handleSubmit(e) {
 
     messageText.textContent = `${brand} ${model} ${actionType} korrekt!`;
     messageModal.classList.remove("hidden");
+
+    if (actionType == "uppdaterades") {
+      console.log("ID:", id, actionType);
+    } else {
+      console.log(brand, model, actionType);
+    }
 
     localStorage.removeItem("currentId");
     userForm.reset();
