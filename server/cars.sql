@@ -14,8 +14,8 @@ INSERT INTO cars(id,brand,model,regnr,color,year,price) VALUES (3,'Volvo','240',
 INSERT INTO cars(id,brand,model,regnr,color,year,price) VALUES (4,'Audi','A6','GIK514','green','2001','13000');
 INSERT INTO cars(id,brand,model,regnr,color,year,price) VALUES (5,'Volkswagen','Passat','GIK127','stone','2023','250000');
 INSERT INTO cars(id,brand,model,regnr,color,year,price) VALUES (6,'Opel','Corsa','GIK758','yellow','2005','6000');
-INSERT INTO cars(id,brand,model,regnr,color,year,price) VALUES (7,'Volvo','850','GIK826','red','1995','11000');
-INSERT INTO cars(id,brand,model,regnr,color,year,price) VALUES (8,'Audi','RS5','GIK636','yellow','2019','750000');
+INSERT INTO cars(id,brand,model,regnr,color,year,price) VALUES (7,'Volvo','850','GIK826','blue','1995','11000');
+INSERT INTO cars(id,brand,model,regnr,color,year,price) VALUES (8,'Audi','RS5','GIK636','black','2019','750000');
 INSERT INTO cars(id,brand,model,regnr,color,year,price) VALUES (9,'Saab','9-5','GIK392','gray','2005','10000');
 INSERT INTO cars(id,brand,model,regnr,color,year,price) VALUES (10,'Ferrari','F40','GIK894','red','1988','28000000');
 

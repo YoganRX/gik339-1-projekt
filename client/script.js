@@ -19,7 +19,7 @@ function fetchData() {
         html += `
         <li
           class="bg-white basis-1/3 text-black p-2 rounded-md border-black-900 flex flex-row gap-4">
-          <div class="bg-${car.color}-950 w-1/3 border border-black"></div>
+          <div class="car-color-${car.color} w-1/3 border border-2 border-black"></div>
           <div class="flex-1 flex flex-col">
             <h3 class="text-lg font-medium">${car.brand} ${car.model}</h3>
             <p>Regnr: ${car.regnr}</p>
